@@ -1,0 +1,43 @@
+﻿@model IEnumerable<PieWorkShop.Models.Student>
+
+
+<html>
+    <head>
+        <p>TEAM D</p>
+    </head>
+    <body>
+        <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Age</th>
+              <th scope="col">Gender</th>
+             
+            </tr>
+          </thead>
+            <tbody>
+            @foreach(var student in Model)
+            {
+                <tr>
+                    <td>@student.FirstName</td>
+                    <td>@student.LastName</td>
+                    <td>@student.Age </td>
+                    <td>@student.Gender</td>
+                   
+                </tr>                  
+
+            }  
+            </tbody>
+        </table>
+
+        <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col"><a asp-controller="Student" asp-action="List"> Root </a></th>
+            </tr>
+          </thead>
+        </table>
+
+    </body>
+</html>
