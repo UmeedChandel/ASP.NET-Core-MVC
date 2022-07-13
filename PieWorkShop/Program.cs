@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPieRepository, MockPieData>();
 builder.Services.AddScoped<ICategoryRepository, MockCategoryData>();
+builder.Services.AddScoped<ICategoryRepository, MockCategoryData>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 var app = builder.Build();
 
