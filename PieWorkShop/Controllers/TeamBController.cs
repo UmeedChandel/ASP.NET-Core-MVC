@@ -14,6 +14,10 @@ namespace PieWorkShop.Controllers
         {
             var students = studentRepository.GetAllStudents();
             var stuB = students.Where(a => a.TeamName == "B");
+            ViewBag.CountB = stuB.Count();
+
+            TempData["CountB"] = stuB.Count();
+
             return View(stuB);
         }
     }

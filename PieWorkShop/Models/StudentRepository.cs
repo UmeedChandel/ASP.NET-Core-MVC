@@ -50,5 +50,17 @@ namespace PieWorkShop.Models
             };
             return spoc;
         }
+
+        public StudentsCount GetStudentsCount()
+        {
+            var studentsCount = new StudentsCount();
+            studentsCount.Count = GetAllStudents().Count();
+            studentsCount.CountA = GetAllStudents().Where(a => a.TeamName == "A").Count();
+            studentsCount.CountB = GetAllStudents().Where(a => a.TeamName == "B").Count();
+            studentsCount.CountC = GetAllStudents().Where(a => a.TeamName == "C").Count();
+            studentsCount.CountD = GetAllStudents().Where(a => a.TeamName == "D").Count();
+
+            return studentsCount;
+        }
     }
 }

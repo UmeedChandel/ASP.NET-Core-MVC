@@ -6,16 +6,19 @@ namespace PieWorkShop.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IStudentRepository studentRepository;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IStudentRepository studentRepository)
         {
             _logger = logger;
+            this.studentRepository = studentRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var studentsCount = studentRepository.GetStudentsCount();
+            return View(studentsCount);
         }
 
         public IActionResult Privacy()

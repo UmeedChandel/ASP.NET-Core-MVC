@@ -1,32 +1,48 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@model StudentsCount
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>ASP.NET Core MVC Sample Project </p>
     <p>Dot net technology track batch 2 </p>
 </div>
 
- <table class="table table-striped table-light">
+ <table class="table table-striped table-dark">
           <thead>
             <tr>
               <th scope="col"> Teams </th>
+              <th scope="col"> Total </th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td> <a class="nav-link" asp-controller="TeamA" asp-action="ListA">Team A</a> </td>
+              <td> 
+                  Team A
+                  <td>@Model.CountA</td>
+              </td>
             </tr>
             <tr>
-              <td><a class="nav-link" asp-controller="TeamB" asp-action="ListB">Team B</a></td>              
+              <td> 
+                  Team B
+                  <td>@Model.CountB</td>
+              </td>
             </tr>
             <tr>
-              <td><a class="nav-link" asp-controller="TeamC" asp-action="ListC">Team C</a></td>              
+              <td> 
+                  Team C
+                  <td>@Model.CountC</td>
+              </td>
             </tr>
             <tr>
-              <td><a class="nav-link" asp-controller="TeamD" asp-action="ListD">Team D</a></td>              
+              <td> 
+                  Team D
+                  <td>@Model.CountD</td>
+              </td>             
             </tr>
-           
+            <tr>
+              <td>  Total</td>
+                  <td>@Model.Count</td>              
+            </tr>
           </tbody>
  </table>

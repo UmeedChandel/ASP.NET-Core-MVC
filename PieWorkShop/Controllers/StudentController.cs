@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PieWorkShop.Models;
+using PieWorkShop.ViewModels;
 
 namespace PieWorkShop.Controllers
 {
@@ -10,22 +11,51 @@ namespace PieWorkShop.Controllers
         {
             this.studentRepository = studentRepository; //assign parameter to obj
         }
-        public ViewResult List()
+
+        private IEnumerable<Student> GetAllStudent()
         {
-            var students = studentRepository.GetAllStudents(); //access method in repo using obj
-            return View(students); //pass on to view
+            return studentRepository.GetAllStudents();
         }
 
+        public ViewResult List()
+        {
+            //inside controller make object for Custome Class
+            //and assign your student and count to property
+            //and pass this object to view
+
+            CustomClass customClass = new CustomClass();
+            customClass.students = GetAllStudent();
+            customClass.count = GetAllStudent().Count();
+
+            //Dictionary objects in ASP.NET MVC
+            //view bag - dynamic read only property object
+            //access inside controller inside view(action method)
+
+            var students = GetAllStudent(); //access method in repo using obj
+            ViewBag.Count = students.Count();
+
+            TempData["Count"] = students.Count();
+
+            return View(customClass); //pass on to view
+        }
         public ViewResult ListA()
         {
+             
             var students = studentRepository.GetAllStudents();
             var stuA = students.Where(a => a.TeamName == "A");
+            ViewBag.CountA = stuA.Count();
+
+            TempData["CountA"] = stuA.Count();
+
             return View(stuA);
         }
         public ViewResult ListB()
         {
             var students = studentRepository.GetAllStudents();
             var stuB = students.Where(a => a.TeamName == "B");
+            ViewBag.CountB = stuB.Count();
+
+            TempData["CountB"] = stuB.Count();
 
             return View(stuB);
 
@@ -34,6 +64,9 @@ namespace PieWorkShop.Controllers
         {
             var students = studentRepository.GetAllStudents();
             var stuC = students.Where(a => a.TeamName == "C");
+            ViewBag.CountC = stuC.Count();
+
+            TempData["CountC"] = stuC.Count();
 
             return View(stuC);
         }
@@ -41,30 +74,75 @@ namespace PieWorkShop.Controllers
         {
             var students = studentRepository.GetAllStudents();
             var stuD = students.Where(a => a.TeamName == "D");
+            ViewBag.CountD = stuD.Count();
+
+            TempData["CountD"] = stuD.Count();
 
             return View(stuD);
+        }
+        public ViewResult ListSpoc()
+        {
+            CustomClass customClassSpoc = new CustomClass();
+            customClassSpoc.students = studentRepository.GetAllSpoc(); 
+            customClassSpoc.count = customClassSpoc.students.Count();
+
+            /*var spoc = studentRepository.GetAllSpoc();
+            ViewBag.CountSpoc = spoc.Count();*/
+
+            return View(customClassSpoc);
         }
 
         public ViewResult ListMale()
         {
-            var students = studentRepository.GetAllStudents();
-            var stuM = students.Where(a => a.Gender == "M");
+            CustomClass customClassMale = new CustomClass();
+            customClassMale.students = studentRepository.
+                GetAllStudents().
+                Where(a => a.Gender == "M").
+                OrderBy(a => a.FirstName);
+            customClassMale.count = customClassMale.students.Count();
 
-            return View(stuM);
+            /*var students = studentRepository.GetAllStudents();
+            var stuM = students.
+                Where(a => a.Gender == "M").
+                OrderBy(a => a.FirstName);
+            ViewBag.CountM = stuM.Count();*/
+
+            return View(customClassMale);
         }
 
         public ViewResult ListFemale()
         {
-            var students = studentRepository.GetAllStudents();
-            var stuF = students.Where(a => a.Gender == "F");
+            CustomClass customClassFemale = new CustomClass();
+            customClassFemale.students = studentRepository.
+                GetAllStudents().
+                Where(a => a.Gender == "F").
+                OrderBy(a => a.FirstName);
+            customClassFemale.count = customClassFemale.students.Count();
 
-            return View(stuF);
+            /*var students = studentRepository.GetAllStudents();
+            var stuF = students.
+                Where(a => a.Gender == "F").
+                OrderByDescending(a => a.FirstName);
+            ViewBag.CountF = stuF.Count();*/
+
+            return View(customClassFemale);
         }
 
-        public ViewResult ListSpoc()
+        public ViewResult ListSName()
         {
-            var spoc = studentRepository.GetAllSpoc();
-            return View(spoc);
+            CustomClass customClassS = new CustomClass();
+            customClassS.students = studentRepository.
+                GetAllStudents().
+                Where(a => a.FirstName.ToUpper().StartsWith("S")).
+                OrderBy(a => a.FirstName);
+            customClassS.count = customClassS.students.Count();
+
+            /*var stuS = studentRepository.GetAllStudents().
+                Where(a => a.FirstName.ToUpper().StartsWith("S")).
+                OrderBy(a => a.FirstName);
+            ViewBag.CountS = stuS.Count();*/
+
+            return View(customClassS);
         }
     }
 }
