@@ -1,9 +1,19 @@
+using Microsoft.EntityFrameworkCore;
 using PieWorkShop.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Connection String
+string connString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(connString);
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Dependencies injection
 builder.Services.AddScoped<IPieRepository, MockPieData>();
 builder.Services.AddScoped<ICategoryRepository, MockCategoryData>();
 builder.Services.AddScoped<ICategoryRepository, MockCategoryData>();

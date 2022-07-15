@@ -3,10 +3,18 @@ namespace PieWorkShop.Models
 {
     public class StudentRepository : IStudentRepository
     {
+        private readonly AppDbContext appDbContext; 
+        public StudentRepository(AppDbContext appDbContext) 
+        {
+            this.appDbContext = appDbContext; 
+        }
+
         //implementation of IStudentRepository Interface Method
         public IEnumerable<Student> GetAllStudents()
         {
-            List<Student> students = new List<Student> {
+            var students = appDbContext.Students;
+
+            /*List<Student> students = new List<Student> {
                 new Student{FirstName="Amara",LastName="Sriram",Age=21, Gender="M", TeamName="A" },
                 new Student{FirstName="Muskan",LastName="Muskan",Age=20, Gender="F", TeamName="A" },
                 new Student{FirstName="Rahul",LastName="Yadav",Age=21, Gender="M", TeamName="A" },
@@ -31,7 +39,7 @@ namespace PieWorkShop.Models
                 new Student{FirstName="Saurabh",LastName="Kumar",Age=21, Gender="M", TeamName="D" },
                 new Student{FirstName="Tisha",LastName="Varshney",Age=20, Gender="F", TeamName="D" },
                 new Student{FirstName="Aman",LastName="Asati",Age=21, Gender="M", TeamName="D" }
-                };
+                };*/
 
             return students;
         }
@@ -51,9 +59,9 @@ namespace PieWorkShop.Models
             return spoc;
         }
 
-        public StudentsCount GetStudentsCount()
+        /*public StudentsCount GetStudentsCount()
         {
-            var studentsCount = new StudentsCount();
+            StudentsCount studentsCount = new StudentsCount();
             studentsCount.Count = GetAllStudents().Count();
             studentsCount.CountA = GetAllStudents().Where(a => a.TeamName == "A").Count();
             studentsCount.CountB = GetAllStudents().Where(a => a.TeamName == "B").Count();
@@ -61,6 +69,6 @@ namespace PieWorkShop.Models
             studentsCount.CountD = GetAllStudents().Where(a => a.TeamName == "D").Count();
 
             return studentsCount;
-        }
+        }*/
     }
 }

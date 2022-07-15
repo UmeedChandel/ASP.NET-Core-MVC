@@ -1,50 +1,19 @@
-﻿@using PieWorkShop.ViewModels
-@model CustomClass
+﻿<head>
+    <p>
+        <h1>DOT NET Batch 2</h1>
+    </p>
+</head>
 
-<html>
-    <head>
-        <p>
-            <h1>DOT NET Batch 2</h1>
-            Total Students: @Model.count
-        </p>
-    </head>
-    <body>
-        <table class="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Age</th>
-              <th scope="col">Gender</th>
-              <th scope="col">Team Name</th>
-              
-            </tr>
-          </thead>
-            <tbody>
-            @foreach(var student in Model.students)
-            {
-                <tr>
-                    <td>@student.FirstName</td>
-                    <td>@student.LastName</td>
-                    <td>@student.Age </td>
-                    <td>@student.Gender</td>
-                    <td>@student.TeamName</td>
-                </tr>                  
+<partial name="_StudentTPartial" />
 
-            }  
-            </tbody>
-        </table>
+<table class="table table-striped table-light">
+    <thead>
+        <tr>
+            <th scope="col"> <a asp-controller="Student" asp-action="ListA">Team A</a></th>
+            <th scope="col"><a asp-controller="Student" asp-action="ListB">Team B</a></th>
+            <th scope="col"><a asp-controller="Student" asp-action="ListC">Team C</a></th>
+            <th scope="col"><a asp-controller="Student" asp-action="ListD">Team D</a></th>
+        </tr>
+    </thead>
+</table>
 
-        <table class="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col"> <a asp-controller="Student" asp-action="ListA">Team A</a></th>
-              <th scope="col"><a asp-controller="Student" asp-action="ListB">Team B</a></th>
-              <th scope="col"><a asp-controller="Student" asp-action="ListC">Team C</a></th>
-              <th scope="col"><a asp-controller="Student" asp-action="ListD">Team D</a></th>
-            </tr>
-          </thead>
-        </table>
-           
-    </body>
-</html>

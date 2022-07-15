@@ -7,6 +7,8 @@ namespace PieWorkShop.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentRepository studentRepository; //object for interface i.e Repository
+        
+        //injection of services
         public StudentController(IStudentRepository studentRepository) //constructor for Controller
         {
             this.studentRepository = studentRepository; //assign parameter to obj
@@ -40,45 +42,53 @@ namespace PieWorkShop.Controllers
         }
         public ViewResult ListA()
         {
-             
-            var students = studentRepository.GetAllStudents();
+
+            /*var students = studentRepository.GetAllStudents();
             var stuA = students.Where(a => a.TeamName == "A");
-            ViewBag.CountA = stuA.Count();
+            ViewBag.CountA = stuA.Count();*/
 
-            TempData["CountA"] = stuA.Count();
+            CustomClass customClass = new CustomClass();
+            customClass.students = GetAllStudent().Where(a => a.TeamName == "A");
+            customClass.count = customClass.students.Count();
 
-            return View(stuA);
+            return View(customClass);
         }
         public ViewResult ListB()
         {
-            var students = studentRepository.GetAllStudents();
+            /*var students = studentRepository.GetAllStudents();
             var stuB = students.Where(a => a.TeamName == "B");
-            ViewBag.CountB = stuB.Count();
+            ViewBag.CountB = stuB.Count();*/
 
-            TempData["CountB"] = stuB.Count();
+            CustomClass customClass = new CustomClass();
+            customClass.students = GetAllStudent().Where(a => a.TeamName == "B");
+            customClass.count = customClass.students.Count();
 
-            return View(stuB);
+            return View(customClass);
 
         }
         public ViewResult ListC()
         {
-            var students = studentRepository.GetAllStudents();
+            /*var students = studentRepository.GetAllStudents();
             var stuC = students.Where(a => a.TeamName == "C");
-            ViewBag.CountC = stuC.Count();
+            ViewBag.CountC = stuC.Count();*/
 
-            TempData["CountC"] = stuC.Count();
+            CustomClass customClass = new CustomClass();
+            customClass.students = GetAllStudent().Where(a => a.TeamName == "C");
+            customClass.count = customClass.students.Count();
 
-            return View(stuC);
+            return View(customClass);
         }
         public ViewResult ListD()
         {
-            var students = studentRepository.GetAllStudents();
+            /*var students = studentRepository.GetAllStudents();
             var stuD = students.Where(a => a.TeamName == "D");
-            ViewBag.CountD = stuD.Count();
+            ViewBag.CountD = stuD.Count();*/
 
-            TempData["CountD"] = stuD.Count();
+            CustomClass customClass = new CustomClass();
+            customClass.students = GetAllStudent().Where(a => a.TeamName == "D");
+            customClass.count = customClass.students.Count();
 
-            return View(stuD);
+            return View(customClass);
         }
         public ViewResult ListSpoc()
         {

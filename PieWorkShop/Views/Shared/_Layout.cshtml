@@ -32,8 +32,8 @@
     </header>*@
     <div class="container">
 
-         <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-light" >
-             <img src="~/Images/GL-logo.png" alt="" width="50" height="40" class="d-inline-block align-text-top">
+         <nav class="navbar navbar-expand-lg navbar-light bg-light bg-light" >
+             <span class="logo"> <a asp-controller="Home" asp-action="Index"><img src="~/Images/GL-logo.png" alt="" width="50" height="40" class="d-inline-block align-text-top"></a> </span>
           <a class="navbar-brand" asp-controller="Home" asp-action="Index">Home</a>
           <a class="navbar-brand" asp-controller="Home" asp-action="Privacy">Privacy</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +78,7 @@
         <div class="row">
             <main role="main" class="pb-3">
                 @RenderBody()
+                @*actual content is fetched and places here*@
             </main>
         </div>
 
@@ -85,7 +86,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - Work Shop - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Umeed - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

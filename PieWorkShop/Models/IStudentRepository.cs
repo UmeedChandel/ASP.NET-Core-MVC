@@ -5,7 +5,7 @@
         IEnumerable<Student> GetAllStudents();
         IEnumerable<Student> GetAllSpoc();
 
-        StudentsCount GetStudentsCount();
+        //StudentsCount GetStudentsCount();
 
     }
 }

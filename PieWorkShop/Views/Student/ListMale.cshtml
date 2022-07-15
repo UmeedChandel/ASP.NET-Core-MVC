@@ -1,46 +1,13 @@
-﻿@using PieWorkShop.ViewModels
-@model CustomClass
+﻿<p>
+    <h4>List Male</h4>
+</p>
 
-<html>
-    <head>
-        <p>
-            <h4>Male</h4>
-            <p>Total Male: @Model.count</p>
-        </p>
-    </head>
-    <body>
-        <table class="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Age</th>
-              <th scope="col">Team</th>
-             
-            </tr>
-          </thead>
-            <tbody>
-            @foreach(var student in Model.students)
-            {
-                <tr>
-                    <td>@student.FirstName</td>
-                    <td>@student.LastName</td>
-                    <td>@student.Age </td>
-                    <td>@student.TeamName </td>
-                   
-                </tr>                  
+<partial name="_StudentTPartial" />
 
-            }  
-            </tbody>
-        </table>
-
-        <table class="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col"><a asp-controller="Student" asp-action="List"> Root </a></th>
-            </tr>
-          </thead>
-        </table>
-
-    </body>
-</html>
+<table class="table table-striped table-light">
+    <thead>
+        <tr>
+            <th scope="col"><a asp-controller="Student" asp-action="List"> Root </a></th>
+        </tr>
+    </thead>
+</table>

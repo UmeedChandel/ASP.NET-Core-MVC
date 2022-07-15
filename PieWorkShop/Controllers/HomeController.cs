@@ -17,8 +17,8 @@ namespace PieWorkShop.Controllers
 
         public IActionResult Index()
         {
-            var studentsCount = studentRepository.GetStudentsCount();
-            return View(studentsCount);
+            //var studentsCount = studentRepository.GetStudentsCount();
+            return View();
         }
 
         public IActionResult Privacy()

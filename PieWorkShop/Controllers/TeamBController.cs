@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PieWorkShop.Models;
+using PieWorkShop.ViewModels;
 
 namespace PieWorkShop.Controllers
 {
@@ -12,13 +13,16 @@ namespace PieWorkShop.Controllers
         }
         public ViewResult ListB()
         {
-            var students = studentRepository.GetAllStudents();
+            /*var students = studentRepository.GetAllStudents();
             var stuB = students.Where(a => a.TeamName == "B");
             ViewBag.CountB = stuB.Count();
+            TempData["CountB"] = stuB.Count();*/
 
-            TempData["CountB"] = stuB.Count();
+            CustomClass customClass = new CustomClass();
+            customClass.students = studentRepository.GetAllStudents().Where(a => a.TeamName == "B");
+            customClass.count = customClass.students.Count();
 
-            return View(stuB);
+            return View(customClass);
         }
     }
 }
