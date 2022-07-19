@@ -59,7 +59,7 @@ namespace PieWorkShop.Models
             return spoc;
         }
 
-        /*public StudentsCount GetStudentsCount()
+        public StudentsCount GetStudentsCount()
         {
             StudentsCount studentsCount = new StudentsCount();
             studentsCount.Count = GetAllStudents().Count();
@@ -69,6 +69,6 @@ namespace PieWorkShop.Models
             studentsCount.CountD = GetAllStudents().Where(a => a.TeamName == "D").Count();
 
             return studentsCount;
-        }*/
+        }
     }
 }
