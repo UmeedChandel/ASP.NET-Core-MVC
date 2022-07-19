@@ -1,5 +1,7 @@
 ﻿namespace PieWorkShop.Models
 {
+
+    //code first approach database second 
     public class Student
     {
         public int StudentID { get; set; } //primary key

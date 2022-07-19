@@ -40,6 +40,13 @@ namespace PieWorkShop.Controllers
 
             return View(customClass); //pass on to view
         }
+
+        public ViewResult Details(int id)
+        {
+           var students = GetAllStudent().FirstOrDefault(student => student.StudentID == id);            
+           return View(students); 
+        }
+
         public ViewResult ListA()
         {
 

@@ -18,14 +18,17 @@ namespace PieWorkShop.Models
 
         //table
         public DbSet<Student> Students { get; set; }
+        /*public DbSet<Student> Spocs { get; set; }*/
 
-        //seeding data to student
-        //add-migration SeedingAllDataToStudent
-        //update-database
+        // seeding data to student
+        // add-migration SeedingAllDataToStudent
+        // update-database
+
+        // OnModelCreating IMPORTANT METHOD
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //seed students
+            // seed students
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Student>().HasData(
                 new List<Student> {
@@ -54,6 +57,19 @@ namespace PieWorkShop.Models
                 new Student{ StudentID= 20,FirstName="Tisha",LastName="Varshney",Age=20, Gender="F", TeamName="D" },
                 new Student{ StudentID= 21,FirstName="Aman",LastName="Asati",Age=21, Gender="M", TeamName="D" }
                 });
+
+            /*modelBuilder.Entity<Student>().HasData(
+                new List<Student> {
+                new Student{StudentID= 22 ,FirstName="Rajeev",LastName="Kumar", Gender="M" },
+                new Student{StudentID= 23,FirstName="Vikas",LastName="Goel", Gender="M"  },
+                new Student{StudentID= 3,FirstName="Mrinalini",LastName="Venkatesh", Gender="F" },
+                new Student{StudentID= 4,FirstName="Ria",LastName="Bhalla", Gender="F" },
+                new Student{StudentID= 5,FirstName="Ankit",LastName="Verma", Gender="M" },
+                new Student{StudentID= 6,FirstName="Ravinder",LastName="kumar", Gender="M" },
+                new Student{StudentID= 7,FirstName="Mansi",LastName="Arora", Gender="F" },
+                new Student{StudentID= 8,FirstName="Vishal",LastName="Karale", Gender="M" },
+                new Student{StudentID= 9,FirstName="Rahul",LastName="Kushwaha", Gender="M" }
+            });*/
         }
     }
 }

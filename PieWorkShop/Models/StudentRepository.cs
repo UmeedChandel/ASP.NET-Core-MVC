@@ -45,7 +45,9 @@ namespace PieWorkShop.Models
         }
         public IEnumerable<Student> GetAllSpoc()
         {
-            List<Student> spoc = new List<Student> {
+            /*var Spocs = appDbContext.Students;*/
+
+            List<Student> Spocs = new List<Student> {
                 new Student{FirstName="Rajeev",LastName="Kumar", Gender="M" },
                 new Student{FirstName="Vikas",LastName="Goel", Gender="M"  },
                 new Student{FirstName="Mrinalini",LastName="Venkatesh", Gender="F" },
@@ -56,7 +58,7 @@ namespace PieWorkShop.Models
                 new Student{FirstName="Vishal",LastName="Karale", Gender="M" },
                 new Student{FirstName="Rahul",LastName="Kushwaha", Gender="M" }
             };
-            return spoc;
+            return Spocs;
         }
 
         public StudentsCount GetStudentsCount()
