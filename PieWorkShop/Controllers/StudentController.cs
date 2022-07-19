@@ -19,6 +19,7 @@ namespace PieWorkShop.Controllers
             return studentRepository.GetAllStudents();
         }
 
+
         public ViewResult List()
         {
             //inside controller make object for Custome Class
@@ -41,11 +42,30 @@ namespace PieWorkShop.Controllers
             return View(customClass); //pass on to view
         }
 
-        public ViewResult Details(int id)
-        {
-           var students = GetAllStudent().FirstOrDefault(student => student.StudentID == id);            
-           return View(students); 
+        //Attribute Routing
+        /*[HttpGet]*/
+        [Route("Student/Details/{Whatever:int}")]
+        public ViewResult Details(int Whatever)
+        {         
+            var student = GetAllStudent().FirstOrDefault(student => student.StudentID == Whatever);
+            return View(student); 
         }
+
+        public ViewResult Edit(int id)
+        {
+            var student = GetAllStudent().FirstOrDefault(student => student.StudentID == id);
+            return View(student);
+        }
+
+        // Controller -> (Model)Repository -> AppDbContext -> DataBase
+
+        [HttpPost]
+        public IActionResult UpdateStudent(Student student)
+        {
+            studentRepository.UpdateStudent(student);
+            return RedirectToAction("List");
+        }
+
 
         public ViewResult ListA()
         {

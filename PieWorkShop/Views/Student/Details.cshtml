@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Student</h4>
+    <h3>Student</h3>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -43,6 +43,24 @@
     </dl>
 </div>
 <div>
-    @*<a asp-action="Edit" asp-route-id="@Model?.StudentID">Edit</a> |*@
+    <a asp-controller="Student" asp-action="Edit" asp-route-id="@Model?.StudentID">Edit</a> |
     <a asp-controller="Student" asp-action="List">Root</a>
+
+    @*@if (@Model.TeamName == "A")
+    {
+        <a asp-controller="Student" asp-action="ListA">Root</a>
+    }
+    @if (@Model.TeamName == "B")
+    {
+        <a asp-controller="Student" asp-action="ListB">Root</a>
+    }
+    @if (@Model.TeamName == "C")
+    {
+        <a asp-controller="Student" asp-action="ListC">Root</a>
+    }
+    @if (@Model.TeamName == "D")
+    {
+        <a asp-controller="Student" asp-action="ListD">Root</a>
+    }*@
+
 </div>

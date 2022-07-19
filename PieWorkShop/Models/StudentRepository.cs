@@ -72,5 +72,12 @@ namespace PieWorkShop.Models
 
             return studentsCount;
         }
+
+        //(Model)Repository -> AppDbContext -> DataBase
+        public int UpdateStudent(Student student)
+        {
+            appDbContext.Students.Update(student);
+            return appDbContext.SaveChanges();
+        }
     }
 }
