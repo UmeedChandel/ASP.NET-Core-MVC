@@ -1,0 +1,210 @@
+Only with Controller and View
+=========================================
+
+1. create Controller - TeamAController
+2. create method named as ListA()
+3. create folder as TeamA under Views
+4. create view inside TeamA folder as ListA.cshtml
+5. copy the content from List.cshtml to ListA.cshtml
+6. run your app as yoururl:portnumber/teama/lista
+7. repeat the steps to create TeamB, TeamC and TeamDControllers
+
+Repository, Controller and View
+=========================================
+
+1. Create interface IStudentRepository.cs in Models folder
+2. Declare methods inside interface
+	public interface IStudentRepository
+    {
+        IEnumerable<Student> GetAllStudents();
+    }
+3. Create class StudentRepository.cs in Models folder
+
+	 public class StudentRepository : IStudentRepository
+    {
+
+        //in this method, you are returning all the students data
+        public IEnumerable<Student> GetAllStudents()
+        {
+            var students = new List<Student> {
+                new Student{FirstName="Amara",LastName="Sriram",Age=21, Gender="M", TeamName="A" },
+                new Student{FirstName="Muskan",LastName="Muskan",Age=20, Gender="F", TeamName="A" },
+                new Student{FirstName="Rahul",LastName="Yadav",Age=21, Gender="M", TeamName="A" },
+                new Student{FirstName="Shraddha",LastName="Shraddha",Age=20, Gender="F", TeamName="A" },
+                new Student{FirstName="Aishwarya",LastName="Verma",Age=20, Gender="F", TeamName="A" },
+
+                new Student{FirstName="Shreya",LastName="",Age=20, Gender="F", TeamName="B" },
+                new Student{FirstName="Nandhita",LastName="",Age=20, Gender="F", TeamName="B" },
+                new Student{FirstName="Shashwat",LastName="",Age=20, Gender="M", TeamName="B" },
+                new Student{FirstName="Siddarth",LastName="",Age=21, Gender="M", TeamName="B" },
+                new Student{FirstName="Shriya",LastName="",Age=20, Gender="F", TeamName="B" },
+
+                new Student{FirstName="Sriram",LastName="",Age=21, Gender="M", TeamName="C" },
+                new Student{FirstName="Sneha",LastName="Sinha",Age=20, Gender="F", TeamName="C" },
+                new Student{FirstName="Simran",LastName="Singh",Age=20, Gender="F", TeamName="C" },
+                new Student{FirstName="Subhash",LastName="Gurjar",Age=21, Gender="M", TeamName="C" },
+                new Student{FirstName="Umeed",LastName="Chandel",Age=19, Gender="F", TeamName="C" },
+
+                new Student{FirstName="Vaibhav",LastName="Bhatnagar",Age=21, Gender="M", TeamName="D" },
+                new Student{FirstName="Pujitha",LastName="Vavilapalli",Age=20, Gender="F", TeamName="D" },
+                new Student{FirstName="Palak",LastName="Soni",Age=20, Gender="F", TeamName="D" },
+                new Student{FirstName="Saurabh",LastName="Kumar",Age=21, Gender="M", TeamName="D" },
+                new Student{FirstName="Tisha",LastName="Varshney",Age=20, Gender="F", TeamName="D" },
+                new Student{FirstName="Aman",LastName="Asati",Age=21, Gender="M", TeamName="D" }
+                };
+            return students;
+        }
+    }
+4. You configured in the program.cs file -> builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+
+5. StudentController should be as shown below
+
+ public class StudentController : Controller
+    {
+        //declaring object for your interface IstudentRepository
+        private readonly IStudentRepository studentRepository;
+
+        public StudentController(IStudentRepository studentRepository)
+        {
+            this.studentRepository = studentRepository;
+        }
+
+        public ViewResult List()
+        {
+
+            var students = studentRepository.GetAllStudents();
+
+            return View(students);
+        }
+    }
+	
+Database, Repository, Controller and View
+=========================================
+
+1. NuGet Packages installation
+2. Go to Dependencies -> Manage NuGet Packages -> Microsoft.EntityFrameworkCore.SqlServer and install it.
+3. Go to Dependencies -> Manage NuGet Packages -> Microsoft.EntityFrameworkCore.Tools and install it.
+4. Now go and Add AppDbContext class under Models and inherit DbContext base class
+5. you file should be like this after constructor
+
+public class AppDbContext: DbContext
+{
+	public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
+	{
+
+	}
+
+	public DbSet<Student> Students{ get; set; }
+
+}
+
+6. Add Connection String to appSettings.json file as below
+ "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=StudentsWorkShop-1;Trusted_Connection=True;MultipleActiveResultSets=true"	
+  },
+
+7. Add connnectionstring to Program.cs file
+string connString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+});
+
+if it startup.cs file the below
+
+IConfiguration and ctor should be added to get Config object
+
+services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+8. Should Add StudentID property in Student.cs file
+
+9. add-migration IntialMigration and update-database	
+
+10. Now seeddata in AppDbContext file paste the below code
+
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //seed students
+
+            modelBuilder.Entity<Student>().HasData(new Student {StudentID=1, FirstName = "", LastName = "", Age = , Gender = "", TeamName = "" });
+
+            
+        }
+
+
+
+
+
+
+ public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+
+        }
+
+        public DbSet<Student> Students { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //seed students
+
+            modelBuilder.Entity<Student>().HasData(new Student {StudentID=1, FirstName = "Amara", LastName = "Sriram", Age = 21, Gender = "M", TeamName = "A" });
+
+            
+        }
+
+Details View
+FirstName column
+StudentController - action method as Called Details. (id )
+	
+		
+Adding Details Page:
+=========================================
+1. First you need Details action method in StudentController class
+
+ public ViewResult Details(int id)
+        {
+            var student = studentRepository.GetAllStudents().FirstOrDefault(student => student.StudentID == id);
+            return View(student);
+        }
+		
+		
+2. Views -> Add -> View -> Razor View -> Add -> Give View Name, Details (Template), Model and AppDbContext, Click Add 
+3. change your name link to invoke Details method
+
+
+Adding Edit Functionality
+=========================================
+1. inside Details.cshtml make sure you have "Edit" link
+
+2. go to Student Controller and action method "Edit" -> will invoke the Edit.cshml
+
+3. now you have to create Edit.cshtml - Students -> Add -> View -> Razor View -> Add -> Edit -> Edit(Template) -> Add
+
+4. you have to do the changes in IStudentRepository, StudentRepository and Controller 
+
+ IStudentRepository -> int UpdateStudent(Student student);
+ 
+ StudentRepository
+ 
+         public int UpdateStudent(Student student)
+        {
+            throw new NotImplementedException();
+        }
+		
+public int UpdateStudent(Student student)
+        {
+            appDbContext.Students.Update(student);
+            return appDbContext.SaveChanges();
+        }
+
+
+
+

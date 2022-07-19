@@ -76,6 +76,7 @@ namespace PieWorkShop.Models
         //(Model)Repository -> AppDbContext -> DataBase
         public int UpdateStudent(Student student)
         {
+            //update and save premanently to db
             appDbContext.Students.Update(student);
             return appDbContext.SaveChanges();
         }

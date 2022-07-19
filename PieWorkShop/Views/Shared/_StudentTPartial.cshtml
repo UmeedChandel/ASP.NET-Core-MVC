@@ -26,7 +26,7 @@ Inside Shared folder as _FileName.cshtml*@
             @foreach(var student in Model.students)
             {
                 <tr>
-                    <td><a asp-controller="Student" asp-action="Details" asp-route-id="@student.StudentID">@student.FirstName</a></td>
+                    <td><a asp-controller="Student" asp-action="Details" asp-route-id1="@student.StudentID">@student.FirstName</a></td>
                     <td>@student.LastName</td>
                     <td>@student.Age </td>
                     <td>@student.Gender</td>

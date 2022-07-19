@@ -43,17 +43,18 @@ namespace PieWorkShop.Controllers
         }
 
         //Attribute Routing
-        /*[HttpGet]*/
-        [Route("Student/Details/{Whatever:int}")]
-        public ViewResult Details(int Whatever)
+        /*[HttpGet]
+        [Route("Student/Details/{id1:int}")]*/
+        public ViewResult Details(int id1)
         {         
-            var student = GetAllStudent().FirstOrDefault(student => student.StudentID == Whatever);
+            var student = GetAllStudent().FirstOrDefault(student => student.StudentID == id1);
             return View(student); 
         }
 
-        public ViewResult Edit(int id)
+        public ViewResult Edit(int id2)
         {
-            var student = GetAllStudent().FirstOrDefault(student => student.StudentID == id);
+            //load the data here
+            var student = GetAllStudent().FirstOrDefault(student => student.StudentID == id2);
             return View(student);
         }
 
@@ -62,10 +63,13 @@ namespace PieWorkShop.Controllers
         [HttpPost]
         public IActionResult UpdateStudent(Student student)
         {
+            //changes made here sent to repo
             studentRepository.UpdateStudent(student);
+
+
+            //telling the mvc where to go next
             return RedirectToAction("List");
         }
-
 
         public ViewResult ListA()
         {

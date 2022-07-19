@@ -41,9 +41,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-/*app.MapControllerRoute(
-    name: "details",
-    pattern: "{controller=Student}/{action=Details}/{Whatever:int}");*/
-
-
 app.Run();

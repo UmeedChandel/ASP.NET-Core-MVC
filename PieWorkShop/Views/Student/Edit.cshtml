@@ -4,11 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h2>Edit</h2>
 
 @*View -> Controller -> (Model)Repository -> AppDbContext -> DataBase*@
 
-<h3>Student</h3>
+<h4>Student</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -52,8 +52,24 @@
 </div>
 
 <div>
-    <a asp-controller="Student" asp-action="List">Root</a>
+    @if ( Model.TeamName == "A")
+    {
+        <a asp-controller="Student" asp-action="ListA">Root</a>
+    }
+    @if (Model.TeamName == "B")
+    {
+        <a asp-controller="Student" asp-action="ListB">Root</a>
+    }
+    @if (Model.TeamName == "C")
+    {
+        <a asp-controller="Student" asp-action="ListC">Root</a>
+    }
+    @if (Model.TeamName == "D")
+    {
+        <a asp-controller="Student" asp-action="ListD">Root</a>
+    }
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
