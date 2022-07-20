@@ -71,6 +71,27 @@ namespace PieWorkShop.Controllers
             return RedirectToAction("List");
         }
 
+        public ViewResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateStudent(Student student)
+        {
+            studentRepository.CreateStudent(student);
+            return RedirectToAction("List");
+
+        }
+
+        public IActionResult Remove(int id3)
+        {
+            var student = GetAllStudent().FirstOrDefault(student => student.StudentID == id3);
+            studentRepository.RemoveStudent(student);
+            return RedirectToAction("List");
+
+        }
+
         public ViewResult ListA()
         {
 

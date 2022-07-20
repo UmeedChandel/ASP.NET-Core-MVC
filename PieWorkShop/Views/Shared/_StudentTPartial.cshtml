@@ -7,11 +7,13 @@ Inside Shared folder as _FileName.cshtml*@
 <html>
     <head>
         <p>
-            <p>Total Student(s): @Model.count</p>
+            Total Student(s): @Model.count
+            <p><a asp-controller="Student" asp-action="Create">Create</a></p>
+
         </p>
     </head>
     <body>
-        <table class="table table-striped table-light">
+        <table class="table table-striped table-dark">
           <thead>
             <tr>
               <th scope="col">First Name</th>
@@ -19,6 +21,7 @@ Inside Shared folder as _FileName.cshtml*@
               <th scope="col">Age</th>
               <th scope="col">Gender</th>
               <th scope="col">Team</th>
+              <th scope="col">Action</th>
              
             </tr>
           </thead>
@@ -31,11 +34,11 @@ Inside Shared folder as _FileName.cshtml*@
                     <td>@student.Age </td>
                     <td>@student.Gender</td>
                     <td>@student.TeamName </td>
-                   
+                    <td><a asp-controller="Student" asp-action="Remove" asp-route-id3="@student.StudentID">Remove</a></td>
                 </tr>                  
 
             }  
             </tbody>
-        </table>
+        </table>       
     </body>
 </html>
