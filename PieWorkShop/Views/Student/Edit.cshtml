@@ -39,21 +39,19 @@
                 <label asp-for="TeamName" class="control-label"></label>
                 <input asp-for="TeamName" class="form-control" />
                 <span asp-validation-for="TeamName" class="text-danger"></span>
-            </div>            
+            </div>     
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
         </form>
     </div>
 </div>
 
 
-<br>
 
-
-<div class="nav">
-    <li>
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </div>
-    </li>
+<div class="nav justify-content-end">
+   
     <li class="nav-item">
         @if ( Model.TeamName == "A")
         {
