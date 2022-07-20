@@ -4,11 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
+<br>
+<h2>Edit Student</h2>
 
 @*View -> Controller -> (Model)Repository -> AppDbContext -> DataBase*@
 
-<h4>Student</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,36 +39,41 @@
                 <label asp-for="TeamName" class="control-label"></label>
                 <input asp-for="TeamName" class="form-control" />
                 <span asp-validation-for="TeamName" class="text-danger"></span>
-            </div>
-            
-            <br>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-            </br>
-            
+            </div>            
         </form>
     </div>
 </div>
 
-<div>
-    @if ( Model.TeamName == "A")
-    {
-        <a asp-controller="Student" asp-action="ListA">Root</a>
-    }
-    @if (Model.TeamName == "B")
-    {
-        <a asp-controller="Student" asp-action="ListB">Root</a>
-    }
-    @if (Model.TeamName == "C")
-    {
-        <a asp-controller="Student" asp-action="ListC">Root</a>
-    }
-    @if (Model.TeamName == "D")
-    {
-        <a asp-controller="Student" asp-action="ListD">Root</a>
-    }
+
+<br>
+
+
+<div class="nav">
+    <li>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </li>
+    <li class="nav-item">
+        @if ( Model.TeamName == "A")
+        {
+            <a class="nav-link" asp-controller="Student" asp-action="ListA">Root</a>
+        }
+        @if (Model.TeamName == "B")
+        {
+            <a class="nav-link" asp-controller="Student" asp-action="ListB">Root</a>
+        }
+        @if (Model.TeamName == "C")
+        {
+            <a class="nav-link" asp-controller="Student" asp-action="ListC">Root</a>
+        }
+        @if (Model.TeamName == "D")
+        {
+            <a class="nav-link" asp-controller="Student" asp-action="ListD">Root</a>
+        }    
+    </li>
 </div>
+
 
 
 @section Scripts {

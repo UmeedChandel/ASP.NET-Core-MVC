@@ -84,9 +84,14 @@ namespace PieWorkShop.Controllers
 
         }
 
-        public IActionResult Remove(int id3)
+        public ViewResult Remove(int id3)
         {
             var student = GetAllStudent().FirstOrDefault(student => student.StudentID == id3);
+            return View(student);
+        }
+
+        public IActionResult RemoveStudent(Student student)
+        {
             studentRepository.RemoveStudent(student);
             return RedirectToAction("List");
 
@@ -178,7 +183,7 @@ namespace PieWorkShop.Controllers
             customClassFemale.students = studentRepository.
                 GetAllStudents().
                 Where(a => a.Gender == "F").
-                OrderBy(a => a.FirstName);
+                OrderByDescending(a => a.FirstName);
             customClassFemale.count = customClassFemale.students.Count();
 
             /*var students = studentRepository.GetAllStudents();

@@ -3,11 +3,10 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h2>Details</h2>
+<br>
+<h2>Student Details</h2>
 
 <div>
-    <h4>Student</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -43,28 +42,35 @@
     </dl>
 </div>
 
-<div>
-    <a asp-controller="Student" asp-action="Edit" asp-route-id2="@Model?.StudentID">Edit</a> |
 
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link" asp-controller="Student" asp-action="Edit" asp-route-id2="@Model?.StudentID">Edit</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" asp-controller="Student" asp-action="Remove" asp-route-id3="@Model?.StudentID" >Remove</a>
+  </li>
+  <li class="nav-item">
     @if ( Model.TeamName == "A")
     {
-        <a asp-controller="Student" asp-action="ListA">Root</a>
+        <a class="nav-link" asp-controller="Student" asp-action="ListA">Root</a>
     }
     @if (Model.TeamName == "B")
     {
-        <a asp-controller="Student" asp-action="ListB">Root</a>
+        <a class="nav-link" asp-controller="Student" asp-action="ListB">Root</a>
     }
     @if (Model.TeamName == "C")
     {
-        <a asp-controller="Student" asp-action="ListC">Root</a>
+        <a class="nav-link" asp-controller="Student" asp-action="ListC">Root</a>
     }
     @if (Model.TeamName == "D")
     {
-        <a asp-controller="Student" asp-action="ListD">Root</a>
-    }
+        <a class="nav-link" asp-controller="Student" asp-action="ListD">Root</a>
+    }    
+  </li>
+</ul>
 
-    
-</div>
+
 
 
  

@@ -5,13 +5,12 @@
 Inside Shared folder as _FileName.cshtml*@
 
 <html>
-    <head>
-        <p>
-            Total Student(s): @Model.count
-            <p><a asp-controller="Student" asp-action="Create">Create</a></p>
-
-        </p>
-    </head>
+    <p>
+        Total Student(s): @Model.count
+        <br>
+        Add new student(s): <a asp-controller="Student" asp-action="Create">click here</a> 
+    </p>
+    
     <body>
         <table class="table table-striped table-dark">
           <thead>

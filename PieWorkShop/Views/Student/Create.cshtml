@@ -39,17 +39,22 @@
             </div>
 
             <br>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-            </br>
 
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-controller="Student" asp-action="List">Root</a>
+    <ul class="nav">
+        <li>
+        <div class="form-group">
+            <input type="submit" value="Creat" class="btn btn-primary" />
+        </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Student" asp-action="List">Root</a>
+        </li>
+    </ul>
 </div>
 
 @section Scripts {
