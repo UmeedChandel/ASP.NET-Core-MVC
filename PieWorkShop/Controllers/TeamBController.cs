@@ -19,7 +19,7 @@ namespace PieWorkShop.Controllers
             TempData["CountB"] = stuB.Count();*/
 
             CustomClass customClass = new CustomClass();
-            customClass.students = studentRepository.GetAllStudents().Where(a => a.TeamName == "B");
+            customClass.students = studentRepository.GetAllStudents().Where(a => a.TeamName.ToUpper() == "B");
             customClass.count = customClass.students.Count();
 
             return View(customClass);

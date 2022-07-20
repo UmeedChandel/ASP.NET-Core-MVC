@@ -105,7 +105,7 @@ namespace PieWorkShop.Controllers
             ViewBag.CountA = stuA.Count();*/
 
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent().Where(a => a.TeamName == "A");
+            customClass.students = GetAllStudent().Where(a => a.TeamName.ToUpper() == "A");
             customClass.count = customClass.students.Count();
 
             return View(customClass);
@@ -117,7 +117,7 @@ namespace PieWorkShop.Controllers
             ViewBag.CountB = stuB.Count();*/
 
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent().Where(a => a.TeamName == "B");
+            customClass.students = GetAllStudent().Where(a => a.TeamName.ToUpper() == "B");
             customClass.count = customClass.students.Count();
 
             return View(customClass);
@@ -130,10 +130,10 @@ namespace PieWorkShop.Controllers
             ViewBag.CountC = stuC.Count();*/
 
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent().Where(a => a.TeamName == "C");
+            customClass.students = GetAllStudent().Where(a => a.TeamName.ToUpper() == "C");
             customClass.count = customClass.students.Count();
 
-            return View(customClass);
+            return View(customClass);   
         }
         public ViewResult ListD()
         {
@@ -142,7 +142,7 @@ namespace PieWorkShop.Controllers
             ViewBag.CountD = stuD.Count();*/
 
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent().Where(a => a.TeamName == "D");
+            customClass.students = GetAllStudent().Where(a => a.TeamName.ToUpper() == "D");
             customClass.count = customClass.students.Count();
 
             return View(customClass);
@@ -164,7 +164,7 @@ namespace PieWorkShop.Controllers
             CustomClass customClassMale = new CustomClass();
             customClassMale.students = studentRepository.
                 GetAllStudents().
-                Where(a => a.Gender == "M").
+                Where(a => a.Gender.ToUpper() == "M").
                 OrderBy(a => a.FirstName);
             customClassMale.count = customClassMale.students.Count();
 
@@ -182,7 +182,7 @@ namespace PieWorkShop.Controllers
             CustomClass customClassFemale = new CustomClass();
             customClassFemale.students = studentRepository.
                 GetAllStudents().
-                Where(a => a.Gender == "F").
+                Where(a => a.Gender.ToUpper() == "F").
                 OrderByDescending(a => a.FirstName);
             customClassFemale.count = customClassFemale.students.Count();
 

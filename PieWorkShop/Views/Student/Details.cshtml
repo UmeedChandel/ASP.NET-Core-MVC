@@ -21,6 +21,14 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastName)
         </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EmailId)
+        </dd>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Age)
         </dt>
@@ -51,19 +59,19 @@
     <a class="nav-link" asp-controller="Student" asp-action="Remove" asp-route-id3="@Model?.StudentID" >Remove</a>
   </li>
   <li class="nav-item">
-    @if ( Model.TeamName == "A")
+    @if ( Model.TeamName == "A"|| Model.TeamName == "a")
     {
         <a class="nav-link" asp-controller="Student" asp-action="ListA">Root</a>
     }
-    @if (Model.TeamName == "B")
+    @if (Model.TeamName == "B"|| Model.TeamName == "b")
     {
         <a class="nav-link" asp-controller="Student" asp-action="ListB">Root</a>
     }
-    @if (Model.TeamName == "C")
+    @if (Model.TeamName == "C"|| Model.TeamName == "c")
     {
         <a class="nav-link" asp-controller="Student" asp-action="ListC">Root</a>
     }
-    @if (Model.TeamName == "D")
+    @if (Model.TeamName == "D"|| Model.TeamName == "d")
     {
         <a class="nav-link" asp-controller="Student" asp-action="ListD">Root</a>
     }    

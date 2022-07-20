@@ -14,7 +14,6 @@ namespace PieWorkShop.Models
 
         [Display(Name = "First Name")]
         [RegularExpression(@"^[a-zA-Z\s]{1,15}$",ErrorMessage ="Please Enter Valid First Name.")]
-        
         public string FirstName { get; set; }
 
         [Display(Name = "Last Name")]
@@ -32,8 +31,12 @@ namespace PieWorkShop.Models
 
         [RegularExpression(@"^[a-dA-D]$", ErrorMessage = "Choose out of: A B C D")]
         [Display(Name = "Team Name")]
-        [StringLength(3)]
         public string TeamName { get; set; }
+
+        [Display(Name = "Email Id")]
+        [StringLength(30)]
+        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Enter Valid Email Id.")]
+        public string EmailId { get; set; } 
 
     }
 }

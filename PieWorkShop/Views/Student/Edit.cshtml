@@ -27,6 +27,13 @@
                 <input asp-for="LastName" class="form-control" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
+
+             <div class="form-group">
+                <label asp-for="EmailId" class="control-label"></label>
+                <input asp-for="EmailId" class="form-control" />
+                <span asp-validation-for="EmailId" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Age" class="control-label"></label>
                 <input asp-for="Age" class="form-control" />
@@ -55,19 +62,19 @@
 <div class="nav justify-content-end">
    
     <li class="nav-item">
-        @if ( Model.TeamName == "A")
+        @if ( Model.TeamName == "A" || Model.TeamName == "a")
         {
             <a class="nav-link" asp-controller="Student" asp-action="ListA">Root</a>
         }
-        @if (Model.TeamName == "B")
+        @if (Model.TeamName == "B" || Model.TeamName == "b")
         {
             <a class="nav-link" asp-controller="Student" asp-action="ListB">Root</a>
         }
-        @if (Model.TeamName == "C")
+        @if (Model.TeamName == "C" || Model.TeamName == "c")
         {
             <a class="nav-link" asp-controller="Student" asp-action="ListC">Root</a>
         }
-        @if (Model.TeamName == "D")
+        @if (Model.TeamName == "D" || Model.TeamName == "d")
         {
             <a class="nav-link" asp-controller="Student" asp-action="ListD">Root</a>
         }    
