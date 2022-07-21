@@ -1,0 +1,34 @@
+Adding Login page to site:
+==================================================
+
+1. Adding 2 packages - Microsoft.AspNetCore.Identity.EntityFrameworkCore and Microsoft.AspNetCore.Identity.UI from NuGet Packages
+
+2. Change AppDbContext to inherit from IdentityDbContext<IdentityUser> as shown here - public class AppDbContext: IdentityDbContext<IdentityUser>
+
+3. add-migration IdentityAdded and update-database in Package Manager Console
+
+4. app.UseAuthentication after app.UseRouting
+
+5. Add new Scaffold Item -> Identity -> Identity -> Add -> Login/Logout/Register -> Pick AppDbContext -> Add
+
+6. There should be Area folder created with necessary pages
+
+7. Add this line as shown below in Program.cs file
+		builder.Services.AddDbContext<AppDbContext>(options =>
+			options.UseSqlServer(connectionString));
+		builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>(); - this needed to bring basic functionality to work related to identity in our application
+
+8. Add this line as shown below in Program.cs file  
+	builder.Services.AddControllersWithViews();
+	builder.Services.AddRazorPages();	
+	
+9. Add this line as shown below in Program.cs file  
+	app.MapControllerRoute
+    name: "default",
+    pattern: "{controller=Student}/{action=List}/{id?}"
+    );
+	app.MapRazorPages();
+	
+10. go to Layout.cshtml file and Add <partial name = "_LoginPartial"/>
+
+11. [Authorize] atribute to Controller or Action methods
