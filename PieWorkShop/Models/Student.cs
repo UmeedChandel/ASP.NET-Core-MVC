@@ -34,7 +34,7 @@ namespace PieWorkShop.Models
         public string TeamName { get; set; }
 
         [Display(Name = "Email Id")]
-        [StringLength(30)]
+        [StringLength(50)]
         [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Enter Valid Email Id.")]
         public string EmailId { get; set; } 
 
