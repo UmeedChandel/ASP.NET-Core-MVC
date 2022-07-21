@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity; // <<<<<<<<============
 using Microsoft.EntityFrameworkCore;
 using PieWorkShop.Models;
 
@@ -10,10 +11,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connString);
 });
 
+//Identity
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>(); // <<<<<<<<============
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Dependencies injection
+builder.Services.AddRazorPages(); // <<<<<<<<============
 builder.Services.AddScoped<IPieRepository, MockPieData>();
 builder.Services.AddScoped<ICategoryRepository, MockCategoryData>();
 builder.Services.AddScoped<ICategoryRepository, MockCategoryData>();
@@ -34,11 +39,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // <<<<<<<<============
 app.UseAuthorization();
 
 // Convention-based routing
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages(); // <<<<<<<<============
 
 app.Run();
