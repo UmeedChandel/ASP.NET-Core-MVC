@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PieWorkShop.Models;
 using PieWorkShop.ViewModels;
 
@@ -97,6 +98,7 @@ namespace PieWorkShop.Controllers
 
         }
 
+        [Authorize]
         public ViewResult ListA()
         {
 
@@ -110,6 +112,8 @@ namespace PieWorkShop.Controllers
 
             return View(customClass);
         }
+
+        [Authorize]
         public ViewResult ListB()
         {
             /*var students = studentRepository.GetAllStudents();
@@ -123,6 +127,8 @@ namespace PieWorkShop.Controllers
             return View(customClass);
 
         }
+
+        [Authorize]
         public ViewResult ListC()
         {
             /*var students = studentRepository.GetAllStudents();
@@ -135,6 +141,8 @@ namespace PieWorkShop.Controllers
 
             return View(customClass);   
         }
+
+        [Authorize]
         public ViewResult ListD()
         {
             /*var students = studentRepository.GetAllStudents();
@@ -147,6 +155,8 @@ namespace PieWorkShop.Controllers
 
             return View(customClass);
         }
+
+        [Authorize]
         public ViewResult ListSpoc()
         {
             CustomClass customClassSpoc = new CustomClass();
@@ -159,6 +169,7 @@ namespace PieWorkShop.Controllers
             return View(customClassSpoc);
         }
 
+        [Authorize]
         public ViewResult ListMale()
         {
             CustomClass customClassMale = new CustomClass();
@@ -177,6 +188,7 @@ namespace PieWorkShop.Controllers
             return View(customClassMale);
         }
 
+        [Authorize]
         public ViewResult ListFemale()
         {
             CustomClass customClassFemale = new CustomClass();
@@ -195,6 +207,7 @@ namespace PieWorkShop.Controllers
             return View(customClassFemale);
         }
 
+        [Authorize]
         public ViewResult ListSName()
         {
             CustomClass customClassS = new CustomClass();
