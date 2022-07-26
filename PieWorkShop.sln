@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PieWorkShop", "PieWorkShop\PieWorkShop.csproj", "{D970AC04-487D-427E-B959-C5D74C785823}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PieWorkShop", "PieWorkShop\PieWorkShop.csproj", "{D970AC04-487D-427E-B959-C5D74C785823}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentAPI", "StudentAPI\StudentAPI.csproj", "{3AB66118-5913-4F80-B968-614F2F8F2B61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D970AC04-487D-427E-B959-C5D74C785823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D970AC04-487D-427E-B959-C5D74C785823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D970AC04-487D-427E-B959-C5D74C785823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB66118-5913-4F80-B968-614F2F8F2B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB66118-5913-4F80-B968-614F2F8F2B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB66118-5913-4F80-B968-614F2F8F2B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB66118-5913-4F80-B968-614F2F8F2B61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
