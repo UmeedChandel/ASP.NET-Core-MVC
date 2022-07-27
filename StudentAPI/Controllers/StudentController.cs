@@ -18,98 +18,195 @@ namespace StudentAPI.Controllers
         [Route("GetAll")]
         public IActionResult GetAllStudents()
         {
-            return Ok(studentRepository.GetAllStudents());
+            try
+            {
+                return Ok(studentRepository.GetAllStudents());
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }         
         }
 
-        [HttpGet]
-        [Route("GetStudent")]
-        public IActionResult GetStudents(int id)
+        [HttpGet("{id}", Name="GetStudent")]
+        public ActionResult<Student> GetStudent(int id = 15)
         {
-            var student = studentRepository.GetAllStudents().FirstOrDefault(a => a.StudentID == id);
-            if (student == null)
+            try
             {
-                return NotFound("No such student exist");
+                var student = studentRepository.GetAllStudents().FirstOrDefault(a => a.StudentID == id);
+                if (student == null)
+                {
+                    return NotFound("No such student exist");
+                }
+                return Ok(student);
+
             }
-            return Ok(student);
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }           
         }
 
         [HttpGet]
         [Route("TeamA")]
         public IActionResult TeamA()
         {
-            return Ok(studentRepository.GetTeamAStudents());
+            try
+            {
+                return Ok(studentRepository.GetTeamAStudents());
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }            
         }
 
         [HttpGet]
         [Route("TeamB")]
         public IActionResult TeamB()
         {
-            return Ok(studentRepository.GetTeamBStudents());
+            try
+            {
+                return Ok(studentRepository.GetTeamBStudents());
+            }
+            catch (Exception)
+            {
 
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }
         }
 
         [HttpGet]
         [Route("TeamC")]
         public IActionResult TeamC()
         {
-            return Ok(studentRepository.GetTeamCStudents());
+            try
+            {
+                return Ok(studentRepository.GetTeamCStudents());
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }         
         }
 
         [HttpGet]
         [Route("TeamD")]
         public IActionResult TeamD()
         {
-            return Ok(studentRepository.GetTeamDStudents());
+            try
+            {
+                return Ok(studentRepository.GetTeamDStudents());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }           
         }
 
         [HttpGet]
         [Route("Male")]
         public IActionResult Male()
         {
-            return Ok(studentRepository.GetMaleStudents());
+            try
+            {
+                return Ok(studentRepository.GetMaleStudents());
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }   
         }
 
         [HttpGet]
         [Route("Female")]
         public IActionResult Female()
         {
-            return Ok(studentRepository.GetFemaleStudents());
+            try
+            {
+                return Ok(studentRepository.GetFemaleStudents());
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }         
         }
 
         [HttpGet]
         [Route("NameS")]
         public IActionResult NameS()
         {
-            return Ok(studentRepository.GetStudentsWithS());
+            try
+            {
+                return Ok(studentRepository.GetStudentsWithS());
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }           
         }
 
         [HttpPost]
         [Route("Insert")]
         public IActionResult Insert(Student student)
         {
-            var insertedStudent = studentRepository.InsertStudent(student);
-            return Ok(insertedStudent);
+            try
+            {
+                var insertedStudent = studentRepository.InsertStudent(student);
+                return CreatedAtRoute("GetStudent", new { id = insertedStudent.StudentID }, insertedStudent);
+                //Ok(insertedStudent);
+
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }           
         }
 
         [HttpPut]
         [Route("Update")]
         public IActionResult Update(Student student)
         {
-            var updatedStudent = studentRepository.UpdateStudent(student);
-            return Ok(updatedStudent);
+            try
+            {
+                var updatedStudent = studentRepository.UpdateStudent(student);
+                return CreatedAtRoute("GetStudent", new { id = updatedStudent.StudentID }, updatedStudent);
+                //Ok(updatedStudent);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("Delete")]
         public IActionResult Delete(int studentID)
         {
-            var student = studentRepository.GetAllStudents().FirstOrDefault(a => a.StudentID == studentID);
-            if (student == null)
+            try
             {
-                return BadRequest("No such student exist");
+                var student = studentRepository.GetAllStudents().FirstOrDefault(a => a.StudentID == studentID);
+                if (student == null)
+                {
+                    return BadRequest("No such student exist");
+                }
+                var updatedStudent = studentRepository.DeleteStudent(studentID);
+                return Ok(updatedStudent);
             }
-            var updatedStudent = studentRepository.DeleteStudent(studentID);
-            return Ok(updatedStudent);
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+            }
         }
     }
 
