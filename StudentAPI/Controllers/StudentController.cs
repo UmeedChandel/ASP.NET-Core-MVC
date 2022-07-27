@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using StudentAPI.Models;
 
 namespace StudentAPI.Controllers
@@ -8,10 +9,11 @@ namespace StudentAPI.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentRepository studentRepository;
-        public StudentController(IStudentRepository studentRepository)
+        private readonly IMapper mapper;
+        public StudentController(IStudentRepository studentRepository, IMapper mapper)
         {
             this.studentRepository = studentRepository;
-                
+            this.mapper = mapper;                
         }
 
         [HttpGet]
@@ -20,11 +22,15 @@ namespace StudentAPI.Controllers
         {
             try
             {
-                return Ok(studentRepository.GetAllStudents());
+                var students = studentRepository.GetAllStudents();      // 6 properties
+                var miniStudent = mapper.Map<StudentMini[]>(students);  // 3 properties
+
+                // mapper.Map<Destination[]>(Source);
+
+                return Ok(miniStudent);
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }         
         }
@@ -39,12 +45,11 @@ namespace StudentAPI.Controllers
                 {
                     return NotFound("No such student exist");
                 }
-                return Ok(student);
-
+                var miniStudent = mapper.Map<StudentMini>(student);
+                return Ok(miniStudent);
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }           
         }
@@ -59,7 +64,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }            
         }
@@ -74,7 +78,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }
         }
@@ -89,7 +92,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }         
         }
@@ -118,7 +120,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }   
         }
@@ -133,7 +134,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }         
         }
@@ -148,7 +148,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }           
         }
@@ -166,7 +165,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }           
         }
@@ -183,7 +181,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }
         }
@@ -204,7 +201,6 @@ namespace StudentAPI.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
             }
         }
