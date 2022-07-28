@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json; // <<<==========
 using PieWorkShop.Models;
 using PieWorkShop.ViewModels;
+using System.Net.Http.Json;
+
+// Controller -> (Model)Repository -> AppDbContext -> DataBase
 
 namespace PieWorkShop.Controllers
 {
@@ -20,25 +24,32 @@ namespace PieWorkShop.Controllers
             return studentRepository.GetAllStudents();
         }
 
-
-        public ViewResult List()
+        public async Task<ViewResult> List() // <<<==========
         {
+            IEnumerable<Student> students = new List<Student>();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:7155/api/Student/GetAll"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    students = JsonConvert.DeserializeObject<IEnumerable<Student>>(apiResponse);
+                }
+            }
             //inside controller make object for Custome Class
             //and assign your student and count to property
             //and pass this object to view
 
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent();
-            customClass.count = GetAllStudent().Count();
+            customClass.students = students;
+            customClass.count = students.Count();
 
             //Dictionary objects in ASP.NET MVC
             //view bag - dynamic read only property object
             //access inside controller inside view(action method)
 
-            var students = GetAllStudent(); //access method in repo using obj
-            ViewBag.Count = students.Count();
-
-            TempData["Count"] = students.Count();
+            var student = students; //access method in repo using obj
+            ViewBag.Count = student.Count();
+            TempData["Count"] = student.Count();
 
             return View(customClass); //pass on to view
         }
@@ -59,15 +70,18 @@ namespace PieWorkShop.Controllers
             return View(student);
         }
 
-        // Controller -> (Model)Repository -> AppDbContext -> DataBase
-
-        [HttpPost]
-        public IActionResult UpdateStudent(Student student)
+        public async Task<IActionResult> UpdateStudent(Student student) //PutAsync
         {
-            //changes made here sent to repo
-            studentRepository.UpdateStudent(student);
+            /*changes made here sent to repo
+            studentRepository.UpdateStudent(student);*/
 
-
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.PutAsJsonAsync("https://localhost:7155/api/Student/Update", student))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                }
+            }
             //telling the mvc where to go next
             return RedirectToAction("List");
         }
@@ -77,12 +91,18 @@ namespace PieWorkShop.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult CreateStudent(Student student)
+        public async Task<IActionResult> CreateStudent(Student student) //PostAsync
         {
-            studentRepository.CreateStudent(student);
-            return RedirectToAction("List");
+            /*studentRepository.CreateStudent(student);*/
 
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.PostAsJsonAsync("https://localhost:7155/api/Student/Insert", student))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                }
+            }
+            return RedirectToAction("List");
         }
 
         public ViewResult Remove(int id3)
@@ -91,11 +111,18 @@ namespace PieWorkShop.Controllers
             return View(student);
         }
 
-        public IActionResult RemoveStudent(Student student)
+        [HttpDelete]
+        public async Task<IActionResult> RemoveStudent(int id)
         {
-            studentRepository.RemoveStudent(student);
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.DeleteAsync("https://localhost:7155/api/Student/Delete?studentID=" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                }
+            }
+            /*studentRepository.RemoveStudent(student);*/
             return RedirectToAction("List");
-
         }
 
         [Authorize]

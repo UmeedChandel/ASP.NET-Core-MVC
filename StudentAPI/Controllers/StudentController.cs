@@ -22,12 +22,11 @@ namespace StudentAPI.Controllers
         {
             try
             {
-                var students = studentRepository.GetAllStudents();      // 6 properties
-                var miniStudent = mapper.Map<StudentMini[]>(students);  // 3 properties
-
+                var students = studentRepository.GetAllStudents();      
+                //var miniStudent = mapper.Map<StudentMini[]>(students); 
                 // mapper.Map<Destination[]>(Source);
 
-                return Ok(miniStudent);
+                return Ok(students);
             }
             catch (Exception)
             {
@@ -40,12 +39,12 @@ namespace StudentAPI.Controllers
         {
             try
             {
-                var student = studentRepository.GetAllStudents().FirstOrDefault(a => a.StudentID == id);
+                var student = studentRepository.GetAllStudents().FirstOrDefault(a => a.StudentID == id); // 6 properties
                 if (student == null)
                 {
                     return NotFound("No such student exist");
                 }
-                var miniStudent = mapper.Map<StudentMini>(student);
+                var miniStudent = mapper.Map<StudentMini>(student);  // 3 properties
                 return Ok(miniStudent);
             }
             catch (Exception)

@@ -52,11 +52,11 @@
     </dl>
     
     <br>
-    <form asp-controller="Student" asp-action="RemoveStudent" method="post">
+    <form asp-controller="Student" asp-action="RemoveStudent" asp-route-id="@Model.StudentID" method="post">
         <input type="hidden" asp-for="StudentID" />
         <input type="submit" value="Delete" class="btn btn-primary" />
 
-        <ul class="nav justify-content-end">
+        @*<ul class="nav justify-content-end">
             <li class="nav-item">
                 @if ( Model.TeamName == "A" || Model.TeamName == "a")
                 {
@@ -75,6 +75,6 @@
                     <a class="nav-link" asp-controller="Student" asp-action="ListD">Root</a>
                 }    
             </li>
-        </ul>
+        </ul>*@
     </form>
 </div>
