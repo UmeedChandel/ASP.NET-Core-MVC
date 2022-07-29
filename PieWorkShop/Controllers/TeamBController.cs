@@ -8,9 +8,16 @@ namespace PieWorkShop.Controllers
     public class TeamBController : Controller
     {
         private readonly IStudentRepository studentRepository; //object for interface i.e Repository
-        public TeamBController(IStudentRepository studentRepository) //constructor for Controller
+        private readonly IConfiguration configuration;
+
+        string baseAddress;
+
+        public TeamBController(IStudentRepository studentRepository, IConfiguration configuration) //constructor for Controller
         {
             this.studentRepository = studentRepository; //assign parameter to obj
+            this.configuration = configuration;
+            this.configuration = configuration;
+            this.baseAddress = configuration.GetValue<string>("BaseAddress");
         }
         [Authorize]
         public ViewResult ListB()
@@ -20,8 +27,10 @@ namespace PieWorkShop.Controllers
             ViewBag.CountB = stuB.Count();
             TempData["CountB"] = stuB.Count();*/
 
+            var students = StaticApiData.GetApiData(baseAddress + "TeamB");
+
             CustomClass customClass = new CustomClass();
-            customClass.students = studentRepository.GetAllStudents().Where(a => a.TeamName.ToUpper() == "B");
+            customClass.students = students.Result;
             customClass.count = customClass.students.Count();
 
             return View(customClass);

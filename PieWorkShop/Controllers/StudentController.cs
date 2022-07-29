@@ -12,46 +12,50 @@ namespace PieWorkShop.Controllers
 {
     public class StudentController : Controller
     {
+        private readonly IConfiguration configuration;
         private readonly IStudentRepository studentRepository; //object for interface i.e Repository
         private readonly IHttpContextAccessor httpContextAccessor;
+
+        string baseAddress;
+
         //injection of services
-        public StudentController(IStudentRepository studentRepository, IHttpContextAccessor httpContextAccessor) //constructor for Controller
+        public StudentController(IStudentRepository studentRepository, IHttpContextAccessor httpContextAccessor, IConfiguration configuration) //constructor for Controller
         {
             this.studentRepository = studentRepository; //assign parameter to obj
             this.httpContextAccessor = httpContextAccessor; // <<== needed for getting user info
+            this.configuration = configuration;
+            this.baseAddress = configuration.GetValue<string>("BaseAddress");
         }
+     
 
         private IEnumerable<Student> GetAllStudent()
         {
-            return studentRepository.GetAllStudents();
+            var students = StaticApiData.GetApiData(baseAddress + "GetAll");
+            return students.Result;
         }
 
         public async Task<ViewResult> List() // <<<==========
         {
             //var user = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier); // <<== needed for getting user info
 
-            IEnumerable<Student> students = new List<Student>();
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync("https://localhost:7155/api/Student/GetAll"))
-                {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    students = JsonConvert.DeserializeObject<IEnumerable<Student>>(apiResponse);
-                }
-            }
+            // Serialize - c# object to json format
+            // Deserialize - json format data into c# object
+
             //inside controller make object for Custome Class
             //and assign your student and count to property
             //and pass this object to view
 
             CustomClass customClass = new CustomClass();
-            customClass.students = students;
-            customClass.count = students.Count();
+            customClass.students = GetAllStudent(); 
+            customClass.count = customClass.students.Count();
+
+            // Use Result because return is Task 
 
             //Dictionary objects in ASP.NET MVC
             //view bag - dynamic read only property object
             //access inside controller inside view(action method)
 
-            var student = students; //access method in repo using obj
+            var student = GetAllStudent(); //access method in repo using obj
             ViewBag.Count = student.Count();
             TempData["Count"] = student.Count();
 
@@ -81,7 +85,7 @@ namespace PieWorkShop.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PutAsJsonAsync("https://localhost:7155/api/Student/Update", student))
+                using (var response = await httpClient.PutAsJsonAsync(baseAddress + "Update", student))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
@@ -101,7 +105,7 @@ namespace PieWorkShop.Controllers
 
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.PostAsJsonAsync("https://localhost:7155/api/Student/Insert", student))
+                using (var response = await httpClient.PostAsJsonAsync(baseAddress + "Insert", student))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
@@ -115,12 +119,11 @@ namespace PieWorkShop.Controllers
             return View(student);
         }
 
-        [HttpDelete]
         public async Task<IActionResult> RemoveStudent(int id)
         {
             using (var httpClient = new HttpClient())
             {
-                using (var response = await httpClient.DeleteAsync("https://localhost:7155/api/Student/Delete?studentID=" + id))
+                using (var response = await httpClient.DeleteAsync(baseAddress + "Delete?studentID=" + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                 }
@@ -130,29 +133,32 @@ namespace PieWorkShop.Controllers
         }
 
         [Authorize]
-        public ViewResult ListA()
+        public async Task<ViewResult> ListA()
         {
-
             /*var students = studentRepository.GetAllStudents();
             var stuA = students.Where(a => a.TeamName == "A");
             ViewBag.CountA = stuA.Count();*/
 
+            var students = StaticApiData.GetApiData(baseAddress + "TeamA");
+
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent().Where(a => a.TeamName.ToUpper() == "A");
+            customClass.students = students.Result;
             customClass.count = customClass.students.Count();
 
             return View(customClass);
         }
 
         [Authorize]
-        public ViewResult ListB()
+        public async Task<ViewResult> ListB()
         {
             /*var students = studentRepository.GetAllStudents();
             var stuB = students.Where(a => a.TeamName == "B");
             ViewBag.CountB = stuB.Count();*/
 
+            var students = StaticApiData.GetApiData(baseAddress + "TeamB");
+
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent().Where(a => a.TeamName.ToUpper() == "B");
+            customClass.students = students.Result;
             customClass.count = customClass.students.Count();
 
             return View(customClass);
@@ -160,28 +166,32 @@ namespace PieWorkShop.Controllers
         }
 
         [Authorize]
-        public ViewResult ListC()
+        public async Task<ViewResult> ListC()
         {
             /*var students = studentRepository.GetAllStudents();
             var stuC = students.Where(a => a.TeamName == "C");
             ViewBag.CountC = stuC.Count();*/
 
+            var students = StaticApiData.GetApiData(baseAddress + "TeamC");
+
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent().Where(a => a.TeamName.ToUpper() == "C");
+            customClass.students = students.Result;
             customClass.count = customClass.students.Count();
 
             return View(customClass);   
         }
 
         [Authorize]
-        public ViewResult ListD()
+        public async Task<ViewResult> ListD()
         {
             /*var students = studentRepository.GetAllStudents();
             var stuD = students.Where(a => a.TeamName == "D");
             ViewBag.CountD = stuD.Count();*/
 
+            var students = StaticApiData.GetApiData(baseAddress + "TeamD");
+
             CustomClass customClass = new CustomClass();
-            customClass.students = GetAllStudent().Where(a => a.TeamName.ToUpper() == "D");
+            customClass.students = students.Result;
             customClass.count = customClass.students.Count();
 
             return View(customClass);
@@ -201,14 +211,13 @@ namespace PieWorkShop.Controllers
         }
 
         [Authorize]
-        public ViewResult ListMale()
+        public async Task<ViewResult> ListMale()
         {
-            CustomClass customClassMale = new CustomClass();
-            customClassMale.students = studentRepository.
-                GetAllStudents().
-                Where(a => a.Gender.ToUpper() == "M").
-                OrderBy(a => a.FirstName);
-            customClassMale.count = customClassMale.students.Count();
+            var students = StaticApiData.GetApiData(baseAddress + "Male");
+
+            CustomClass customClass = new CustomClass();
+            customClass.students = students.Result;
+            customClass.count = customClass.students.Count();
 
             /*var students = studentRepository.GetAllStudents();
             var stuM = students.
@@ -216,18 +225,17 @@ namespace PieWorkShop.Controllers
                 OrderBy(a => a.FirstName);
             ViewBag.CountM = stuM.Count();*/
 
-            return View(customClassMale);
+            return View(customClass);
         }
 
         [Authorize]
-        public ViewResult ListFemale()
+        public async Task<ViewResult> ListFemale()
         {
-            CustomClass customClassFemale = new CustomClass();
-            customClassFemale.students = studentRepository.
-                GetAllStudents().
-                Where(a => a.Gender.ToUpper() == "F").
-                OrderByDescending(a => a.FirstName);
-            customClassFemale.count = customClassFemale.students.Count();
+            var students = StaticApiData.GetApiData(baseAddress + "Female");
+
+            CustomClass customClass = new CustomClass();
+            customClass.students = students.Result;
+            customClass.count = customClass.students.Count();
 
             /*var students = studentRepository.GetAllStudents();
             var stuF = students.
@@ -235,25 +243,24 @@ namespace PieWorkShop.Controllers
                 OrderByDescending(a => a.FirstName);
             ViewBag.CountF = stuF.Count();*/
 
-            return View(customClassFemale);
+            return View(customClass);
         }
 
         [Authorize]
-        public ViewResult ListSName()
+        public async Task<ViewResult> ListSName()
         {
-            CustomClass customClassS = new CustomClass();
-            customClassS.students = studentRepository.
-                GetAllStudents().
-                Where(a => a.FirstName.ToUpper().StartsWith("S")).
-                OrderBy(a => a.FirstName);
-            customClassS.count = customClassS.students.Count();
+            var students = StaticApiData.GetApiData(baseAddress + "NameS");
+
+            CustomClass customClass = new CustomClass();
+            customClass.students = students.Result;
+            customClass.count = customClass.students.Count();
 
             /*var stuS = studentRepository.GetAllStudents().
                 Where(a => a.FirstName.ToUpper().StartsWith("S")).
                 OrderBy(a => a.FirstName);
             ViewBag.CountS = stuS.Count();*/
 
-            return View(customClassS);
+            return View(customClass);
         }
     }
 }
