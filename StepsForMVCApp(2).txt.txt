@@ -1,0 +1,303 @@
+Coding:
+
+1. Create StudentController
+2. Action method -
+
+ public ViewResult List()
+        {
+            var students = studentRepository.GetAllStudents();
+
+            ViewBag.Count = students.Count();
+            StudentsWithCount studentsWithCount = new StudentsWithCount();
+            studentsWithCount.students = students;
+            studentsWithCount.count = students.Count();
+            return View(studentsWithCount);
+        }
+
+3. create IStudentRepository.cs file
+
+4. define the method as -         IEnumerable<Student> GetAllStudents();
+
+5. implement IStudentRepository into StudentRepository
+
+6. StudentRepository.cs file
+
+	public IEnumerable<Student> GetAllStudents()
+        {
+            var students = appDbContext.Students;          
+            return students;
+        }
+7. AppDbContext file
+
+ public class AppDbContext:  DbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+
+        }
+
+        public DbSet<Student> Students { get; set; }
+
+
+        //OnModelCreating method helps us to inject/seed our initial data to the table
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //seed students
+
+            modelBuilder.Entity<Student>().HasData(
+                new List<Student> {
+                new Student{StudentID=1, FirstName="Amara",LastName="Sriram",Age=21, Gender="M", TeamName="A" },
+                new Student{StudentID=2, FirstName="Muskan",LastName="Muskan",Age=20, Gender="F", TeamName="A" },
+                new Student{StudentID=3, FirstName="Rahul",LastName="Yadav",Age=21, Gender="M", TeamName="A" },
+                new Student{StudentID=4, FirstName="Shraddha",LastName="Shraddha",Age=20, Gender="F", TeamName="A" },
+                new Student{StudentID=5, FirstName="Aishwarya",LastName="Verma",Age=20, Gender="F", TeamName="A" },
+
+                new Student{StudentID=6, FirstName="Shreya",LastName="",Age=20, Gender="F", TeamName="B" },
+                new Student{StudentID=7, FirstName="Nandhita",LastName="",Age=20, Gender="F", TeamName="B" },
+                new Student{StudentID=8, FirstName="Shashwat",LastName="",Age=20, Gender="M", TeamName="B" },
+                new Student{StudentID=9, FirstName="Siddarth",LastName="",Age=21, Gender="M", TeamName="B" },
+                new Student{StudentID=10, FirstName="Shriya",LastName="",Age=20, Gender="F", TeamName="B" },
+
+                new Student{StudentID=11, FirstName="Sriram",LastName="",Age=21, Gender="M", TeamName="C" },
+                new Student{StudentID=12, FirstName="Sneha",LastName="Sinha",Age=20, Gender="F", TeamName="C" },
+                new Student{StudentID=13, FirstName="Simran",LastName="Singh",Age=20, Gender="F", TeamName="C" },
+                new Student{StudentID=14, FirstName="Subhash",LastName="Gurjar",Age=21, Gender="M", TeamName="C" },
+                new Student{StudentID=15, FirstName="Umeed",LastName="Chandel",Age=19, Gender="F", TeamName="C" },
+
+                new Student{StudentID=17, FirstName="Pujitha",LastName="Vavilapalli",Age=20, Gender="F", TeamName="D" },
+                new Student{StudentID=18, FirstName="Palak",LastName="Soni",Age=20, Gender="F", TeamName="D" },
+                new Student{StudentID=19, FirstName="Saurabh",LastName="Kumar",Age=21, Gender="M", TeamName="D" },
+                new Student{StudentID=20, FirstName="Tisha",LastName="Varshney",Age=20, Gender="F", TeamName="D" },
+                new Student{StudentID=21, FirstName="Aman",LastName="Asati",Age=21, Gender="M", TeamName="D" }
+                });
+        }
+
+    }
+	
+8. "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=StudentsWorkShop-Demo;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+  
+9. under Views -> Student -> List.cshtml (firstname link) 
+
+10. Create _Partial page
+
+11. Details page
+
+	StudentController -> Details(int id)
+	Views -> Student -> Details.cshtml (Razor View - details)
+	
+	
+=============================================
+
+MVC validations
+
+[Required(ErrorMessage ="Please enter first name")]
+[Display(Name ="First Name")]
+[StringLength(50)]
+[ScaffoldColumn(false)]
+[DisplayFormat(DataFormatString = "{0:d}",ApplyFormatInEditMode = true)]
+[CustomHireDate(ErrorMessage = "Hire Date must be less than or equal to Today's Date")]
+
+
+=============================================
+
+1. Create link needed in home page
+2. Create Action method needed in student controller
+3. Create.cshtml needed under Student Folder - using Create template, Student model and AppDbContext while creating Razor View
+
+****************************************************
+====================================================
+
+View Components:
+
+1. Create Components folder
+2. Create CategoryMenu.cs file
+3. Create Components folder under Views -> Shared
+4. Create CategoryMenu folder under Views -> Shared -> Components
+5. Create Default.cshtml
+6. do the necessary changes in List method
+7. Use if wherver you want
+
+
+====================================================
+
+Exception Handling in API'seed
+
+
+try
+{
+	var teamAStudents = this.studentRepository.GetAll().Where(student => student.TeamName == "A");
+	return new JsonResult(teamAStudents);
+}
+catch (Exception)
+{
+	return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Error");
+}
+
+====================================================
+
+Modal Validations
+
+ public class Student
+    {
+        public int StudentID { get; set; }
+
+        [Required(ErrorMessage ="Please provide first name")]
+        [StringLength(10, ErrorMessage = "please enter less than 10 characters")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Please provide last name")]
+        [StringLength(10, ErrorMessage = "please enter less than 10 characters")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Please provide age")]
+        [Range(6,40,ErrorMessage ="Age should be between 6 and 40")]
+        public int Age { get; set; }
+
+        [Required(ErrorMessage = "Please provide Gender")]
+        [StringLength(1, ErrorMessage = "please enter one character(M/F) character")]
+        public string Gender { get; set; }
+
+        [Required(ErrorMessage = "Please provide Team Name")]
+        [StringLength(1, ErrorMessage = "please enter one(A/B/C/D) character")]
+        public string TeamName { get; set; }
+    }
+
+====================================================
+
+Adding Mapper to Any project
+
+1. Download AutoMapper.Extensions.Microsoft.DependencyInjection from NuGet
+2. Configure as service in program.cs file -> builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+3. Create Profile class which should tell source and destination mapping as below
+
+ public class StudentProfile: Profile
+    {
+        public StudentProfile()
+        {
+            this.CreateMap<Student,StudentMini>();
+        }
+    }
+	
+4. inject into Controller contructor -> IMapper mapper.Map
+
+5. invoke mapper.map<StudentMini[]>(students);
+
+====================================================
+
+
+CreatedAtRoute:
+
+[HttpGet("{id}", Name ="GetStudent")]
+public ActionResult<Student> GetStudent(int id = 2)
+{
+	var student = this.studentRepository.GetAllStudents().FirstOrDefault(student => student.StudentID == id);
+	if(student == null)
+	{
+		return NotFound("student not found for this id");
+	}
+	return Ok(student);
+}
+
+[HttpPost]
+[Route("InsertStudent")]
+public IActionResult InsertStudent(Student student)
+{
+	var insertedStudent = this.studentRepository.InsertStudent(student);
+	//var path = linkGenerator.GetPathByAction("GetStudent", "Student", new { id = insertedStudent.StudentID });
+	//return Created(path, insertedStudent);
+
+
+	return CreatedAtRoute("GetStudent", new { id = insertedStudent.StudentID }, insertedStudent);
+}
+
+====================================================
+
+Managing Session in ASP.NET CORE
+
+1. Microsoft.AspNetCore.Session download NuGet Package for the project
+2. Add Session into Service Collection as Below in Program.cs file
+
+	builder.Services.AddSession();
+	var app = builder.Build();
+
+3. Use Session as below before Routing in Program.cs file
+
+	app.UseSession();
+	app.UseRouting();
+
+
+
+
+=====================================================
+
+1. private readonly IHttpContextAccessor httpContextAccessor;
+2. Inject into constructor 
+
+  public StudentController(IStudentRepository studentRepository, IHttpContextAccessor httpContext)
+        {
+            //you are getting StudentRepository object 
+            //StudentRepository studentRepository = new StudentRepository();
+            this.studentRepository = studentRepository;
+            this.httpContextAccessor = httpContext;
+        }
+		
+access user data inside action methiods - var user = httpContextAccessor.HttpContext.User;
+
+
+=====================================================
+
+
+1. program.cs 
+
+builder.Services.AddHttpContextAccessor(); //needed
+builder.Services.AddSession();
+var app = builder.Build();
+
+2. Inside your controller
+	 private readonly IHttpContextAccessor httpContextAccessor;
+	 
+	 public StudentController(IStudentRepository studentRepository, IHttpContextAccessor httpContext)
+			{
+				//you are getting StudentRepository object 
+				//StudentRepository studentRepository = new StudentRepository();
+				this.studentRepository = studentRepository;
+				this.httpContextAccessor = httpContext;
+			}
+		
+		
+3. inside your action method
+
+	var user = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name);
+	
+=====================================================
+
+To Get the API address from appSettings.json
+
+1.   "baseAddress": "http://localhost:7186/api/student/"
+
+2. in your controller
+
+	private readonly IConfiguration configuration;
+	
+	 public StudentController(IStudentRepository studentRepository, IHttpContextAccessor httpContext, IConfiguration configuration)
+	{
+		//you are getting StudentRepository object 
+		//StudentRepository studentRepository = new StudentRepository();
+		this.studentRepository = studentRepository;
+		this.httpContextAccessor = httpContext;
+		this.configuration = configuration;
+	}
+		
+3. In your action methods:
+	var baseAddress = configuration.GetValue<string>("baseAddress");
+		
+		
+ 
+ 
+ 
+
+
