@@ -4,6 +4,7 @@ using Newtonsoft.Json; // <<<==========
 using PieWorkShop.Models;
 using PieWorkShop.ViewModels;
 using System.Net.Http.Json;
+using System.Security.Claims; // <<== needed for getting user info
 
 // Controller -> (Model)Repository -> AppDbContext -> DataBase
 
@@ -12,11 +13,12 @@ namespace PieWorkShop.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentRepository studentRepository; //object for interface i.e Repository
-        
+        private readonly IHttpContextAccessor httpContextAccessor;
         //injection of services
-        public StudentController(IStudentRepository studentRepository) //constructor for Controller
+        public StudentController(IStudentRepository studentRepository, IHttpContextAccessor httpContextAccessor) //constructor for Controller
         {
             this.studentRepository = studentRepository; //assign parameter to obj
+            this.httpContextAccessor = httpContextAccessor; // <<== needed for getting user info
         }
 
         private IEnumerable<Student> GetAllStudent()
@@ -26,6 +28,8 @@ namespace PieWorkShop.Controllers
 
         public async Task<ViewResult> List() // <<<==========
         {
+            //var user = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier); // <<== needed for getting user info
+
             IEnumerable<Student> students = new List<Student>();
             using (var httpClient = new HttpClient())
             {

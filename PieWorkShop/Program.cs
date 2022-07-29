@@ -24,6 +24,9 @@ builder.Services.AddScoped<ICategoryRepository, MockCategoryData>();
 builder.Services.AddScoped<ICategoryRepository, MockCategoryData>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
+// builder.Services.AddHttpContextAccessor(); // <<== needed for getting user info
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
